@@ -62,13 +62,13 @@ function App() {
     }
     
     const fetchConversations = async () => {
-        const response = await axios.get('http://localhost:8080/conversation')
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/conversation`)
         console.log("response", response)
         return response.data
     }
     
     const fetchMessages = async () => {
-        const response = await axios.get('http://localhost:8080/message')
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/message`)
         console.log("response", response)
         return response.data
     }
@@ -84,7 +84,7 @@ function App() {
     
     const sendMessage = async (e, ConversationId) => {
         console.log("message envoyé", newMessage)
-        await axios.post('http://localhost:8080/message', {
+        await axios.post(`${process.env.REACT_APP_BASE_URL}/message`, {
             content: newMessage,
             UserId: userId,
             ConversationId,
@@ -97,7 +97,7 @@ function App() {
     }
     
     const deleteConversation = async (e,ConversationId) => {
-        await axios.delete(`http://localhost:8080/conversation/${ConversationId}`)
+        await axios.delete(`${process.env.REACT_APP_BASE_URL}/conversation/${ConversationId}`)
         fetchConversations().then((res) => {
             setConversations(res)
         })

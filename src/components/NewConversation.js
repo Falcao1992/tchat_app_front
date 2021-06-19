@@ -7,7 +7,7 @@ const NewConversation = ({setConversations, fetchConversations}) => {
     
     const sendNewConversation = async (e) => {
         if( newConversation !== "" ) {
-            await axios.post('http://localhost:8080/conversation', {
+            await axios.post(`${process.env.REACT_APP_BASE_URL}/conversation`, {
                 name: newConversation
             })
             setNewConversation("")

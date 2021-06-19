@@ -9,7 +9,7 @@ const Form = ({ name, setName, lastname, setLastname, isLogin, setIsLogin, setUs
         console.log("submit")
         e.preventDefault()
         if( name !== "" && lastname !== "" ) {
-            const postUser = await axios.post('http://localhost:8080/user', {
+            const postUser = await axios.post(`${process.env.REACT_APP_BASE_URL}/user`, {
                 name,
                 lastname
             })
