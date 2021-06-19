@@ -7,6 +7,9 @@ import Form from "./components/Form"
 import styled from "styled-components"
 import {Button, TextField} from "@material-ui/core"
 import NewConversation from "./components/NewConversation"
+import moment from 'moment';
+import 'moment/locale/fr';
+import Tooltip from "@material-ui/core/Tooltip"
 
 function TabPanel(props) {
     const {
@@ -105,6 +108,7 @@ function App() {
     
     return (
         <ContainerAppStyled className="App">
+            <h1>Test Technique Tchat App</h1>
             <Form setUserId={setUserId}
                   name={name}
                   setName={setName}
@@ -113,7 +117,7 @@ function App() {
                   isLogin={isLogin}
                   setIsLogin={setIsLogin} />
                   
-                  <NewConversation fetchConversations={fetchConversations} setConversations={setConversations} />
+                  <NewConversation fetchConversations={fetchConversations} setConversations={setConversations} isLogin={isLogin} />
             <ContainerTabsStyled>
                 <Tabs
                     orientation="vertical"
@@ -140,16 +144,17 @@ function App() {
                             {messages && messages.filter(message => message.ConversationId === conv.id).map((msg) => {
                                 return (
                                     <BlockMessage key={msg.id} ownmessage={msg.UserId === userId}>
-                                        <p>{msg.author}</p>
+                                        <span>{msg.author}</span>
                                         <p>{msg.content}</p>
-                                        <span>{msg.createdAt}</span>
+                                        <span>{moment(msg.createdAt).calendar()}</span>
                                     </BlockMessage>
                                 )
                             })}
                             <BlockSendMessage>
+                                <Tooltip title={!isLogin && "Veuillez vous connectez svp"} aria-label="connect you before">
                                 <TextField
                                     id="outlined-multiline-flexible"
-                                    label="Multiline"
+                                    label="Votre message ..."
                                     multiline
                                     rowsMax={4}
                                     value={newMessage}
@@ -157,13 +162,14 @@ function App() {
                                     variant="outlined"
                                     disabled={!userId}
                                 />
+                                </Tooltip>
                                 <Button disabled={!userId}
                                         onClick={(e) => sendMessage(e, conv.id)}
                                         variant="contained"
                                         color="primary">
                                     envoyer message
                                 </Button>
-                                <Button
+                                <Button disabled={!userId}
                                         onClick={(e) => deleteConversation(e, conv.id)}
                                         variant="contained"
                                         color="secondary">
@@ -182,6 +188,16 @@ const ContainerAppStyled = styled.div`
   display: flex;
   flex-direction: column;
   padding: 28px;
+  
+  h1 {
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .MuiTabs-indicator {
+    background-color: blue;
+    width: 3px;
+  }
 `
 
 const ContainerTabsStyled = styled.div`
@@ -191,11 +207,12 @@ const ContainerTabsStyled = styled.div`
 
 const TabStyled = styled(Tab)`
   padding: 25px;
-  background-color: #7adaff;
- 
+  background-color: lightcyan;
+  font-weight: bold;
+
 `
 const ContainerMessages = styled.div`
-  height: 65vh;
+  height: 55vh;
   overflow-x: hidden;
   border: 1px solid lightgrey;
   border-radius: 8px;
@@ -211,19 +228,26 @@ const BlockMessages = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
+  height: 100%;
 `
 
 const BlockMessage = styled.div`
   margin-bottom: 10px;
   width: fit-content;
-  border-radius: 20px;
-  background-color: ${props => props.ownmessage ? "#81f381" : "#7adaff"};
-  padding: 18px;
+  
+  padding: 18px 0;
   text-align: ${props => props.ownmessage ? "left" : "right"};
   margin-left: ${props => !props.ownmessage && "auto"};
 
+  p {
+    border-radius: 10px;
+    background-color: ${props => props.ownmessage ? "#81f381" : "#7adaff"};
+    padding: 5px 10px;
+    margin: 5px 0;
+  }
   span {
     font-size: 14px;
+    text-transform: capitalize;
   }
 `
 

@@ -5,8 +5,10 @@ html {
   /*
   background: repeating-linear-gradient(45deg, #141421 0px, #141421 97px, #141421d4 97px, #141421d4 194px, #141421e8 194px, #141421e8 291px);
   */
-  background-color: #8ea9d7;;
+  background-color: #ffffff;;
   overflow-x: hidden;
+  font-weight: bold;
+  font-family: "Gill Sans", sans-serif;
 }
 *, *:before, *:after {
   box-sizing: inherit;

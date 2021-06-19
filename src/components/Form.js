@@ -55,6 +55,9 @@ const ContainerFormStyled = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 25px;
+  background-color: lightcyan;
+  margin-bottom: 25px;
 `
 
 const FormStyled = styled.form`
